@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+button {
+    text-align: center;
+}
+
+.intro {
+    display: flex;
+    margin: 20px;
+}
+
+.dataForecast {
+    text-align: center;
+    flex: 1;
+}
+
+.dataForecast table {
+    border: 1px;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.dataForecast th,
+.dataForecast td {
+    border: 2px solid #ddd;
+    padding: 10px;
+}
+
+.dataForecast th {
+    background-color: hsl(0, 0%, 20%);
+    color: white;
+}
+
+.row {
+    background-color: hsl(0, 0%, 20%);
+    color: white;
+}
+
+.collapse {
+    display: none;
+}
+
+.collapse.show {
+    display: block;
+    transition: max-height 0.2s ease-out;
+}
+
+.button-collapse {
+    background-color: hsl(0, 0%, 20%);
+    color: white;
+    cursor: pointer;
+    padding: 20px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.button-collapse:hover {
+    background-color: hsl(0, 0%, 30%);
+}

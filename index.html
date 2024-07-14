@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAS Manajemen Rantai Pasok</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>UAS Manajemen Rantai Pasok</h1>
+
+    <div class="intro">
+        <table>
+            <tr>
+                <td><strong>Nama</strong></td>
+                <td>:</td>
+                <td>KARINA NATASYA DARMAWAN</td>
+            </tr>
+            <tr>
+                <td><strong>NIM</strong></td>
+                <td>:</td>
+                <td>23170008</td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <button onclick="toggleCollapse()" data-toggle="collapse" data-target="#content" class="button-collapse">
+            Data Penjualan Aktual
+        </button>
+        <div id="content" class="dataForecast collapse"></div>
+    </div>
+
+    <div>
+        <div>
+            <button onclick="displayForecast('SMA')">Forecast Simple Moving Area</button>
+            <button onclick="displayForecast('WMA')">Forecast Weighted Moving Area</button>
+        </div>
+        <div id="result" class="dataForecast"></div>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        function toggleCollapse() {
+            let content = document.querySelector('#content');
+            content.classList.toggle('show');
+            displayData();
+        }
+
+        function displayData() {
+            var showData = document.getElementById("content");
+            let data = showActualData();
+
+            let showDataHTML = '<table><thead><tr><th>Year</th><th>Forecast</th></tr></thead><tbody>';
+            data.forEach(data => {
+                showDataHTML += `<tr><td>${data.year}</td><td>${data.sales}</td></tr>`;
+            });
+            showDataHTML += '</tbody></table>';
+
+            showData.innerHTML = showDataHTML;
+        }
+
+        function displayForecast(type) {
+            let result = document.getElementById('result')
+            let data, totalAbsoluteError, totalSquareError, meanAbsoluteError, meanSquareError;
+
+            if (type == 'SMA') {
+                [data, totalAbsoluteError, totalSquareError, meanAbsoluteError, meanSquareError] = calculateSMA();
+            } else if (type == 'WMA') {
+                [data, totalAbsoluteError, totalSquareError, meanAbsoluteError, meanSquareError] = calculateWMA();
+            }
+
+            let resultHTML = '<table><thead><tr><th>Year</th><th>Forecast</th><th>Absolute Error</th><th>Square Error</th></tr></thead><tbody>';
+            data.forEach(data => {
+                resultHTML += `<tr><td>${data.year}</td><td>${data.forecast.toFixed(2)}</td><td>${data.absoluteError}</td><td>${data.squareError}</td></tr>`;
+            });
+            resultHTML += `<tr><td colspan="2" class='row'>Total</td><td>${totalAbsoluteError.toFixed(2)}</td><td>${totalSquareError.toFixed(2)}</td></tr>`;
+            resultHTML += `<tr><td colspan="2" class='row'>Mean</td><td>${meanAbsoluteError.toFixed(2)}</td><td>${meanSquareError.toFixed(2)}</td></tr>`;
+            resultHTML += '</tbody></table>';
+
+            resultHTML += `<h4>Absolute Error <p>Total: ${totalAbsoluteError.toFixed(2)} <br> Mean: ${meanAbsoluteError.toFixed(2)}</p></h4>`;
+            resultHTML += `<h4>Square Error <p>Total: ${totalSquareError.toFixed(2)} <br> Mean: ${meanSquareError.toFixed(2)}</p></h4>`;
+
+            result.innerHTML = resultHTML;
+        }
+    </script>
+</body>
+
+</html>
